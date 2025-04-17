@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 LOCAL_APPS = [
     'apps.transactions.apps.TransactionsConfig',
+    'apps.notifications.apps.NotificationsConfig',
 ]
 
 THIRD_PARTY_APPS = [
