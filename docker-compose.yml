@@ -7,8 +7,6 @@ services:
       - .:/app
     depends_on:
       - mongo
-    environment:
-      - DJANGO_SETTINGS_MODULE=myproject.settings
     restart: always
 
   mongo:

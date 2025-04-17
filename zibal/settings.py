@@ -30,6 +30,14 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+LOCAL_APPS = [
+    'apps.transactions.apps.TransactionsConfig',
+]
+
+THIRD_PARTY_APPS = [
+    'rest_framework',
+]
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    *LOCAL_APPS,
+    *THIRD_PARTY_APPS,
 ]
 
 MIDDLEWARE = [
@@ -120,3 +131,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# from .mongo_client import *
+
+from mongoengine import connect
+
+connect(
+    db="zibal_db",
+    host="mongodb://mongo:27017/zibal_db"
+)
