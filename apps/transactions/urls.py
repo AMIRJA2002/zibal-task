@@ -1,8 +1,7 @@
 from django.urls import path
-from .views import TestMongo, TransactionReportView
-
+from .views import TransactionReportView, CachedTransactionHistory
 
 urlpatterns = [
-    path('', TestMongo.as_view()),
     path('report/', TransactionReportView.as_view()),
+    path('cache/', CachedTransactionHistory.as_view()),
 ]

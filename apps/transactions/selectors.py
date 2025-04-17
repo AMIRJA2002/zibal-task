@@ -10,10 +10,17 @@ from apps.transactions.date_convertors import (
 )
 
 
-def get_daily_transactions(type: str, merchant_id: str | None = None) -> List[Dict[str, Union[str, int]]]:
+def get_daily_transactions(
+        type: str,
+        merchant_id: str | None = None,
+        start_date: datetime | None = None
+) -> List[Dict[str, Union[str, int]]]:
     match_stage = {}
     if merchant_id:
         match_stage['merchantId'] = ObjectId(merchant_id)
+
+    if start_date:
+        match_stage['createdAt'] = {'$gte': start_date}
 
     pipeline = []
 
@@ -57,10 +64,17 @@ def get_daily_transactions(type: str, merchant_id: str | None = None) -> List[Di
     return result
 
 
-def get_weekly_transactions(type: str, merchant_id: str | None = None) -> List[Dict[str, Union[str, int]]]:
+def get_weekly_transactions(
+        type: str,
+        merchant_id: str | None = None,
+        start_date: datetime | None = None,
+) -> List[Dict[str, Union[str, int]]]:
     match_stage = {}
     if merchant_id:
         match_stage['merchantId'] = ObjectId(merchant_id)
+
+    if start_date:
+        match_stage['createdAt'] = {'$gte': start_date}
 
     pipeline = []
 
@@ -102,10 +116,17 @@ def get_weekly_transactions(type: str, merchant_id: str | None = None) -> List[D
     return result
 
 
-def get_monthly_transactions(type: str, merchant_id: str | None = None) -> List[Dict[str, Union[str, int]]]:
+def get_monthly_transactions(
+        type: str,
+        merchant_id: str | None = None,
+        start_date: datetime | None = None,
+) -> List[Dict[str, Union[str, int]]]:
     match_stage = {}
     if merchant_id:
         match_stage['merchantId'] = ObjectId(merchant_id)
+
+    if start_date:
+        match_stage['createdAt'] = {'$gte': start_date}
 
     pipeline = []
 

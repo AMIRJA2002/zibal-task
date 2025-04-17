@@ -1,4 +1,4 @@
-from mongoengine import Document, IntField, DateTimeField, ObjectIdField
+from mongoengine import Document, IntField, DateTimeField, ObjectIdField, StringField, ListField, DictField
 
 
 class Transaction(Document):
@@ -8,4 +8,14 @@ class Transaction(Document):
 
     meta = {
         'collection': 'transaction'
+    }
+
+
+class TransactionSummary(Document):
+    mode = StringField(required=True, choices=['daily', 'weekly', 'monthly'])
+    summary = ListField(DictField())
+    lastUpdate = DateTimeField(required=True)
+
+    meta = {
+        'collection': 'transaction_summary'
     }
