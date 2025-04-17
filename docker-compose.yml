@@ -18,5 +18,19 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  celery:
+    build: .
+    command: celery -A zibal worker --loglevel=info
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+      - web
+
 volumes:
   mongo_data:
