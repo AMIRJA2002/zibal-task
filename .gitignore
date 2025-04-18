@@ -1,0 +1,92 @@
+# Python Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables
+.env
+.env.*
+*.env
+
+# Django
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+db.sqlite3
+/static/
+media/
+*.sqlite3
+*.bak
+*.swp
+*.swo
+*.idea/
+*.vscode/
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# pytest
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+
+# Coverage reports
+*.coverage
+*.tox
+*.nox
+*.coverage.*
+*.hypothesis/
+
+# mypy
+.mypy_cache/
+
+# Pylint
+pylint-report.txt
+pylint-global-msgs.txt
+
+# Poetry
+.poetry/
+
+# Pipenv
+Pipfile.lock
+
+# Cython build
+cython_debug/
+
+# Environments
+venv/
+env/
+ENV/
+.venv/
+venv.bak/
+env.bak/
+
+# local IDE configurations
+.idea/
+.vscode/
+
+# macOS
+.DS_Store
