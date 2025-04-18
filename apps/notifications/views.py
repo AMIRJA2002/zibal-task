@@ -1,6 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .sevices import send_notification
+from rest_framework import status
+from .models import NotificationLog
 
 
 class NotifierView(APIView):
@@ -9,25 +11,9 @@ class NotifierView(APIView):
         return Response({'msg': 'ok'})
 
 
-from rest_framework.response import Response
-from rest_framework import status
-from mongoengine.queryset.visitor import Q
-
-from .models import NotificationLog, MediumEnum, StatusEnum
-
-
 class NotificationLogListView(APIView):
     def get(self, request):
-        medium = request.GET.get('medium')  # email, sms, telegram
-        status_param = request.GET.get('status')  # pending, failed, etc.
-
-        query = Q()
-        if medium:
-            query &= Q(medium=medium)
-        if status_param:
-            query &= Q(status=status_param)
-
-        logs = NotificationLog.objects(query).order_by('-id')  # جدیدترین بالا
+        logs = NotificationLog.objects.order_by('-id')
 
         data = []
         for log in logs:

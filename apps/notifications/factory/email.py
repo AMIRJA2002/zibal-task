@@ -10,6 +10,6 @@ class EmailSender(NotificationSender):
             message,
             'amirjas8177@gmail.com',
             [recipient,],
-            fail_silently=False,
+            fail_silently=True,
         )
         return True
