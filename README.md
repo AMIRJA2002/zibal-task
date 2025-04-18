@@ -1,6 +1,6 @@
 # Project Name
 
-Description of your project goes here. Briefly explain what the project does, its purpose, and any key features.
+a simple task for handling transactions and notification. using django, mongodb, celery, beat,
 
 ## How to Run
 
