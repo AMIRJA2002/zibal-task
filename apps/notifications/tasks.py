@@ -21,7 +21,6 @@ def save_notification_log(task_id: str, medium: str, recipient: str, message: st
 
     status_map = {
         'PENDING': StatusEnum.PENDING,
-        'STARTED': StatusEnum.STARTED,
         'SUCCESS': StatusEnum.SUCCESS,
         'FAILURE': StatusEnum.FAILED,
     }
@@ -44,3 +43,40 @@ def save_notification_log(task_id: str, medium: str, recipient: str, message: st
             message=message,
             recipient=recipient
         ).save()
+
+
+@shared_task
+def check_pending_notifications():
+    pending_logs = NotificationLog.objects(status=StatusEnum.PENDING)
+
+    for log in pending_logs:
+        result = AsyncResult(log.task_id, app=app)
+        status_mapping = {
+            'SUCCESS': StatusEnum.SUCCESS,
+            'FAILURE': StatusEnum.FAILED,
+            'PENDING': StatusEnum.PENDING,
+        }
+
+        if result.status == 'PENDING':
+            continue
+
+        new_status = status_mapping.get(str(result.status), StatusEnum.FAILED)
+        log.status = new_status
+        log.save()
+
+
+
+@shared_task
+def retry_failed_notifications():
+    failed_logs = NotificationLog.objects(status=StatusEnum.FAILED)
+
+    for log in failed_logs:
+        try:
+            send_notification_task.delay(log.medium.value, log.recipient, log.message)
+            log.status = StatusEnum.PENDING
+            log.save()
+
+        except Exception as e:
+            print(f"Error retrying notification for task {log.task_id}: {e}")
+            log.status = StatusEnum.FAILED
+            log.save()

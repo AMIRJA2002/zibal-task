@@ -2,13 +2,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .sevices import send_notification
 
+
 class NotifierView(APIView):
     def get(self, request):
-        send_notification(['email', 'telegram'], 'amir@amir.com', 'this is a test')
+        send_notification(['email', 'telegram'], 'ja.amir2002@gmail.com', 'this is a test')
         return Response({'msg': 'ok'})
 
 
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from mongoengine.queryset.visitor import Q

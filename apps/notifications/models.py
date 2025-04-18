@@ -12,7 +12,6 @@ class StatusEnum(enum.Enum):
     PENDING = "pending"
     FAILED = "failed"
     SUCCESS = "success"
-    STARTED = "started"
 
 
 class NotificationLog(Document):
