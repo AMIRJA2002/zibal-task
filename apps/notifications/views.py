@@ -1,14 +1,29 @@
+from rest_framework import status, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .sevices import send_notification
-from rest_framework import status
 from .models import NotificationLog
 
 
 class NotifierView(APIView):
+    class NotificationRequestSerializer(serializers.Serializer):
+        mediums = serializers.ListField(
+            child=serializers.ChoiceField(choices=['email', 'sms', 'telegram']),
+            required=True
+        )
+        recipient = serializers.CharField(required=True)
+        message = serializers.CharField(max_length=1000, required=True)
+
     def get(self, request):
-        send_notification(['email', 'telegram'], 'ja.amir2002@gmail.com', 'this is a test')
-        return Response({'msg': 'ok'})
+
+        data = self.NotificationRequestSerializer(data=request.data)
+        data.is_valid(raise_exception=True)
+        mediums = data.validated_data['mediums']
+        recipient = data.validated_data['recipient']
+        message = data.validated_data['message']
+
+        send_notification(mediums, recipient, message)
+        return Response({'message': 'notification accepted'}, status.HTTP_202_ACCEPTED)
 
 
 class NotificationLogListView(APIView):
